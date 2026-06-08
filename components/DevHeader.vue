@@ -1,7 +1,7 @@
 <template>
     <nav class="navbar navbar-expand-lg border-bottom d-flex">
         <div class="container-fluid">
-            <img src="/spacialist_logo.svg" alt="Spacialist Logo" width="30" height="30" class="playground-logo d-inline-block align-text-top me-2">
+            <img src="../spacialist_logo.svg" alt="Spacialist Logo" width="30" height="30" class="playground-logo d-inline-block align-text-top me-2">
             <RouterLink
                 class="navbar-brand"
                 to="/"

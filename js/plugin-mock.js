@@ -27,7 +27,7 @@ import { useAppStore } from './store';
  * 
  * @param {PluginMockOptions} options - The options for the polyfill.
  */
-export function createPluginMock(routes, store) {
+export function createPluginMock({ routes = {}, stores = {} } = {}) {
 
     let componentRouteAdded = false;
     let componentRoute = {
@@ -39,8 +39,13 @@ export function createPluginMock(routes, store) {
 
     window.SpPS = {
         api: {
-            store,
-            http: (method, url, data) => routes.http(method, url, data),
+            store: stores,
+            http: (method, url, data) => {
+                if (typeof routes.http !== 'function') {
+                    throw new Error('createPluginMock: routes.http is required');
+                }
+                return routes.http(method, url, data);
+            },
             router: {
                 push: (route) => {
                     console.log(`Navigating to `, route);
@@ -51,8 +56,8 @@ export function createPluginMock(routes, store) {
                         return;
                     }
 
-                    const entity = mockStores?.entityStore?.getEntity(entityId);
-                    mockStores?.entityStore?.set(entity);
+                    const entity = stores?.entityStore?.getEntity(entityId);
+                    stores?.entityStore?.set(entity);
 
                 },
                 currentRoute: {
@@ -63,7 +68,7 @@ export function createPluginMock(routes, store) {
             },
         },
         data: {
-            t: window.i18n.global.t,
+            t: window.i18n?.global?.t,
         },
         register: ({ id, i18n, routes, store }) => {
             window.SpPS.registerI18n(id, i18n);
