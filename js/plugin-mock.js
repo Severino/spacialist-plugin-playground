@@ -1,11 +1,34 @@
 import DevComponentPreview from '../components/DevComponentPreview.vue';
 import router from './router';
 import { useAppStore } from './store';
+
+/**
+ * @typedef {Object} PluginMockOptions
+ * @property {MockRoutes} routes - The mock routes to use for the http function.
+ * @property {MockStores} stores - The mock stores to use for the store.
+ */
+
+/**
+ * @typedef {Object} MockRoutes
+ * @property {function} http - The mock implementation of the http function.
+ * @param {string} method - The HTTP method (e.g., 'get', 'post', 'put', 'delete').
+ * @param {string} url - The URL of the request.
+ * @param {Object} data - The data to be sent with the request (for 'post' and 'put' methods).
+ * @returns {Object} The mock response data.
+ */
+
+/** 
+ * @typedef {Object} MockStores
+ * @property {Object} store - The mock implementation of the store.
+ */
+
 /** 
  * Polyfill for the SpPS plugin system.
+ * 
+ * @param {PluginMockOptions} options - The options for the polyfill.
  */
-export function createPluginPolyfill() {
-    
+export function createPluginMock(routes, store) {
+
     let componentRouteAdded = false;
     let componentRoute = {
         path: `/component`,
@@ -15,13 +38,54 @@ export function createPluginPolyfill() {
     };
 
     window.SpPS = {
-        register: ({ id, i18n, routes, store }) => { },
-        registerI18n: (id, i18n) => { },
+        api: {
+            store,
+            http: (method, url, data) => routes.http(method, url, data),
+            router: {
+                push: (route) => {
+                    console.log(`Navigating to `, route);
+                    const entityId = route?.params?.id ?? 0;
+                    
+                    if(!entityId) {
+                        console.error("No entity ID provided in route params.");
+                        return;
+                    }
+
+                    const entity = mockStores?.entityStore?.getEntity(entityId);
+                    mockStores?.entityStore?.set(entity);
+
+                },
+                currentRoute: {
+                    value: {
+                        query: ""
+                    }
+                }
+            },
+        },
+        data: {
+            t: window.i18n.global.t,
+        },
+        register: ({ id, i18n, routes, store }) => {
+            window.SpPS.registerI18n(id, i18n);
+        },
+        registerI18n: (id, i18n) => {
+            const languages = Object.keys(i18n);
+            for (const lang of languages) {
+                // Build per-locale messages under the `plugin` namespace
+                const localeMessages = { plugin: i18n[lang] };
+
+
+                window.i18n.global.messages[lang] = localeMessages;
+
+            }
+
+            console.log(window.i18n.global.messages.en);
+        },
         registerComponent: (componentDefinition) => {
             const store = useAppStore();
             store.registerComponent(componentDefinition);
 
-            if(!componentRouteAdded){
+            if (!componentRouteAdded) {
                 router.addRoute(componentRoute);
                 componentRouteAdded = true;
             }
@@ -43,7 +107,7 @@ export function createPluginPolyfill() {
                 }
             };
             routes.forEach(route => {
-                if(!route.component) {
+                if (!route.component) {
                     console.error(`Route ${route.path} does not have a component.`);
                     return;
                 }
@@ -72,7 +136,7 @@ export function createPluginPolyfill() {
         }) => {
             const store = useAppStore();
 
-            if(slot == 'tab') {
+            if (slot == 'tab') {
                 const tab = {
                     id: key,
                     of: of,
@@ -84,7 +148,7 @@ export function createPluginPolyfill() {
                     props: props,
                 };
                 store.addTab(tab);
-            } else if(slot == 'tools' || slot == 'settings') {
+            } else if (slot == 'tools' || slot == 'settings') {
                 const item = {
                     id: key,
                     of: of,

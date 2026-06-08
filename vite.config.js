@@ -1,19 +1,8 @@
 import { defineConfig } from 'vite';
 import vue from '@vitejs/plugin-vue';
-import { XMLParser } from 'fast-xml-parser';
 import { readFileSync } from 'fs';
 
 
-let pluginName;
-
-const xmlParser = new XMLParser();
-const manifestText = readFileSync('../plugin.xml', 'utf8');
-const manifest = xmlParser.parse(manifestText);
-pluginName = manifest?.info?.name;
-
-if(!pluginName) {
-    throw new Error('manifest.xml does not contain a name');
-}
 // Check if Vite is running in development mode
 const isDev = process.env.NODE_ENV === 'development';
 export default defineConfig({
@@ -28,22 +17,5 @@ export default defineConfig({
         // Serve assets directory only in dev server
         publicDir: 'public',
         middlewareMode: false,
-        setupMiddlewares: (middlewares, devServer) => {
-            middlewares.use((req, res, next) => {
-                console.log(`Received request for ${req.url}`);
-                if (req.url.startsWith('/assets/')) {
-                    const fs = require('fs');
-                    const path = require('path');
-                    const assetPath = path.join(devServer.config.root, req.url);
-                    if (!fs.existsSync(assetPath)) {
-                        res.statusCode = 404;
-                        res.end('404 Not Found');
-                        return;
-                    }
-                }
-                next();
-            });
-            return middlewares;
-        },
     }
 });

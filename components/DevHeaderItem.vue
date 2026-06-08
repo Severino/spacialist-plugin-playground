@@ -1,27 +1,27 @@
 <template>
     <li class="nav-item dropdown">
         <a
-            class="nav-link dropdown-toggle"
-            href="#"
-            role="button"
-            data-bs-toggle="dropdown"
-            aria-expanded="false"
+            :class="['nav-link', { 'dropdown-toggle': hasItems }]"
+            :href="hasItems ? '#' : null"
+            :role="hasItems ? 'button' : null"
+            :data-bs-toggle="hasItems ? 'dropdown' : null"
+            :aria-expanded="hasItems ? 'false' : null"
         >
             {{ title }}<span
-                v-if="items.length > 0"
+                v-if="hasItems"
                 class="text-secondary ms-1"
             >({{ items.length }})</span>
         </a>
         <ul
-            v-if="items.length > 0"
+            v-if="hasItems"
             class="dropdown-menu"
         >
             <li
                 v-for="item in items"
                 :key="item.label"
+                class="dropdown-item"
             >
                 <router-link
-                    class="dropdown-item"
                     :to="`/${item.of}/${item.href}`"
                     href="#"
                 >
@@ -33,15 +33,18 @@
 </template>
 
 <script setup>
+import { computed } from 'vue';
 
-    const props = defineProps({
-        title: {
-            type: String,
-            required: true
-        },
-        items: {
-            type: Array,
-            required: true
-        }
-    });
+const props = defineProps({
+    title: {
+        type: String,
+        required: true
+    },
+    items: {
+        type: Array,
+        required: true
+    }
+});
+
+const hasItems = computed(() => props.items.length > 0);
 </script>
