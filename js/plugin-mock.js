@@ -128,6 +128,24 @@ export function createPluginMock({ routes = {}, stores = {} } = {}) {
             });
             router.addRoute(pluginRoute);
         },
+        /**
+         * @typedef {Object} SlotDefinition
+         * @property {string} of - Unique id string of the plugin.
+         * @property {string} slot - Unique slot string of the plugin. Can be "tab", "tools" or "settings".
+         * @property {Object} component - The Vue component to render in the slot. Requires componentTag to be set.
+         * @property {string} componentTag - The tag of the component, defaults to key.
+         * @property {string} key - Unique key string of the slot.
+         * @property {string} icon - Icon of the slot.
+         * @property {string} label - Label of the slot.
+         * @property {string} href - Unknown at the moment.
+         * @property {Object} props - Currently Unsupported
+         */
+
+        /**
+         * Adds a specific component to a application slot
+         * 
+         * @param {SlotDefinition} slotDefinition - The definition of the slot to fill. 
+         */
         intoSlot: ({
             of, // unique id string of the plugin.
             slot, // ["tab","tools","settings"] - unique slot string of the plugin.

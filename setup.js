@@ -8,34 +8,24 @@ import { createPinia } from 'pinia';
 import router from './js/router.js';
 import { createI18n } from 'vue-i18n';
 
-
-async function loadOptionalExport(path, exportName) {
-    try {
-        const mod = await import(/* @vite-ignore */ path);
-        return mod[exportName];
-    } catch (error) {
-        console.warn(`Optional mock module not found: ${path}`);
-        return undefined;
+export async function usePlayground({
+    routes = {},
+    stores = {},
+    i18nLocale = 'en',
+    i18nMessages = {
+        en: { },
+        de: { }
     }
-}
-
-export async function usePlayground() {
+} = {}) {
 
     const i18n = createI18n({
-        locale: 'en',
-        messages: {
-            en: {},
-            de: {},
-        }
+        locale: i18nLocale,
+        messages: i18nMessages
     })
     window.i18n = i18n;
 
-    let mockRoutes, mockStores;
 
-    mockRoutes = await loadOptionalExport('/mock/mock_routes.js', 'mockRoutes');
-    mockStores = await loadOptionalExport('/mock/mock_stores.js', 'mockStores');
-
-    createPluginMock({ routes: mockRoutes, stores: mockStores });
+    createPluginMock({ routes, stores });
     const app = createApp(App);
 
     app.use(createPinia());

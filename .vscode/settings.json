@@ -1,4 +1,8 @@
 {
     "vue.format.wrapAttributes": "force-expand-multiline",
     "html.format.wrapAttributes": "force-expand-multiline",
+
+    "vue.format.style.initialIndent": true,
+    "vue.format.script.initialIndent": true,
+    "vue.format.template.initialIndent": true,
 }
