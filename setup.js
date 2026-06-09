@@ -26,13 +26,16 @@ export async function usePlayground({
 
 
     const app = createApp(App);
-    
-    app.use(createPinia());
+
+    const pinia = createPinia();
+    console.log('Pinia instance created:', pinia);
+
+    app.use(pinia);
     app.use(i18n);
     app.use(router);
     
     createPluginMock({ routes, stores });
-    
+
     app.mount('#app');
     
     return app;
