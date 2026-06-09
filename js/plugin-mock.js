@@ -69,7 +69,7 @@ export function createPluginMock({ pinia, router, routes = {}, stores = {}, extr
                     }
                 }
             },
-            api,
+            ... api,
         },
         data: {
             t: window.i18n?.global?.t,
