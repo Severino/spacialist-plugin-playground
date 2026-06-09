@@ -46,26 +46,29 @@
     import DevHeaderItem from './DevHeaderItem.vue';
 
 
-    let store = null;
+    let store = ref(null);
+    let items = ref([]);
 
     onMounted(() => {
-        store = useAppStore();
+        store.value = useAppStore();
+
+        items.value = [
+            {
+                title: 'Tools',
+                items: store.tools
+            },
+            {
+                title: 'Settings',
+                items: store.settings
+            },
+            {
+                title: 'Components',
+                items: store.components
+            }
+        ];
     });
 
-    const items = [
-        {
-            title: 'Tools',
-            items: store.tools
-        },
-        {
-            title: 'Settings',
-            items: store.settings
-        },
-        {
-            title: 'Components',
-            items: store.components
-        }
-    ];
+
 
 </script>
 
