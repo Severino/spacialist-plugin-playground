@@ -98,6 +98,35 @@ export function createPluginMock({ pinia, router, routes = {}, stores = {}, extr
         register: ({ id, i18n, routes, store }) => {
             window.SpPS.registerI18n(id, i18n);
         },
+        registerPreferences: ({
+            of,
+            key,
+            label,
+            category,
+            subcategory,
+            custom_subcategory,
+            custom_label,
+            component,
+            componentTag,
+            default_value
+        } = {}) => {
+            const store = useAppStore(pinia);
+            preferences.forEach(pref => {
+                pref.id = `${id}_${pref.key}`;
+                store.preferences.push({
+                    of,
+                    key,
+                    label,
+                    category,
+                    subcategory,
+                    custom_subcategory,
+                    custom_label,
+                    component,
+                    componentTag,
+                    default_value,
+                });
+            });
+        },
         registerI18n: (id, i18n) => {
             const languages = Object.keys(i18n);
             for (const lang of languages) {
