@@ -1,6 +1,6 @@
 
 
-export function useViteServer({
+export default function useViteServer({
     publicDir = 'public',
     middlewareMode = false,
     setupMiddlewares = null,

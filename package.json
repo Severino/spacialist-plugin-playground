@@ -5,7 +5,8 @@
   "main": "./index.js",
   "module": "./index.js",
   "exports": {
-    ".": "./index.js"
+    ".": "./index.js",
+    "./useViteServer": "./js/vite-server.js"
   },
   "scripts": {
     "postinstall": "node ./scripts/postinstall.js"
