@@ -5,7 +5,7 @@ import 'bootstrap/dist/js/bootstrap.bundle.min.js'; // Import Bootstrap JS
 import { createApp } from 'vue';
 import { createPluginMock } from './js/plugin-mock.js';
 import { createPinia } from 'pinia';
-import router from './js/router.js';
+import useRouter from './js/router.js';
 import { createI18n } from 'vue-i18n';
 
 export async function usePlayground({
@@ -32,7 +32,7 @@ export async function usePlayground({
 
     app.use(pinia);
     app.use(i18n);
-    app.use(router);
+    app.use(useRouter());
     
     createPluginMock({ routes, stores });
 
