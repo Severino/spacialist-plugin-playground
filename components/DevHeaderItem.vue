@@ -21,12 +21,12 @@
                 :key="item.label"
                 class="dropdown-item"
             >
-                <router-link
+                <RouterLink
                     :to="`/${item.of}/${item.href}`"
                     href="#"
                 >
                     {{ item.label }}
-                </router-link>
+                </RouterLink>
             </li>
         </ul>
     </li>

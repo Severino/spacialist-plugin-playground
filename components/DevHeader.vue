@@ -40,7 +40,6 @@
 </template>
 
 <script setup>
-    import { RouterLink } from 'vue-router';
     import { useAppStore } from '../js/store';
     import DevHeaderItem from './DevHeaderItem.vue';
 
