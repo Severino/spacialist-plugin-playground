@@ -40,7 +40,7 @@
 </template>
 
 <script setup>
-    import { onMounted } from 'vue';
+    import { onMounted, ref } from 'vue';
     import { RouterLink } from 'vue-router';
     import { useAppStore } from '../js/store';
     import DevHeaderItem from './DevHeaderItem.vue';
