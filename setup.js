@@ -40,8 +40,9 @@ export async function usePlayground({
 
     app.use(pinia);
     app.use(i18n);
-    createPluginMock({ pinia, http, stores, extras, api, });
-    app.use(useRouter(routes));
+    const router = useRouter(routes)
+    createPluginMock({ pinia, router, http, stores, extras, api, });
+    app.use(router);
 
 
     app.mount('#app');

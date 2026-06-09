@@ -28,7 +28,7 @@ import { useAppStore } from './store';
  * 
  * @param {PluginMockOptions} options - The options for the polyfill.
  */
-export function createPluginMock({ pinia, http = () => { }, stores = {}, extras = {}, api = {} } = {}) {
+export function createPluginMock({ pinia, router, http = () => { }, stores = {}, extras = {}, api = {} } = {}) {
 
     console.log("Creating plugin mock with options:", { pinia, http, stores, extras, api });
 
@@ -64,26 +64,31 @@ export function createPluginMock({ pinia, http = () => { }, stores = {}, extras 
 
                 },
             },
-            router: {
-                push: (route) => {
-                    console.log(`Navigating to `, route);
-                    const entityId = route?.params?.id ?? 0;
+            router,
+            // router: {
+            //     push: (route) => {
+            //         console.log(`Navigating to `, route);
+            //         const entityId = route?.params?.id ?? 0;
 
-                    if (!entityId) {
-                        console.error("No entity ID provided in route params.");
-                        return;
-                    }
+            //         if (!entityId) {
+            //             console.error("No entity ID provided in route params.");
+            //             return;
+            //         }
 
-                    const entity = stores?.entityStore?.getEntity(entityId);
-                    stores?.entityStore?.set(entity);
+            //         const entity = stores?.entityStore?.getEntity(entityId);
+            //         stores?.entityStore?.set(entity);
 
-                },
-                currentRoute: {
-                    value: {
-                        query: ""
-                    }
-                }
-            },
+            //     },
+            //     _raw: router,
+            //     currentRoute: {
+            //         value: {
+            //             get params() {
+            //                 const currentRoute = router.currentRoute.value;
+            //                 return currentRoute ? currentRoute.params : {};
+            //             }
+            //         }
+            //     }
+            // },
 
             ...api,
         },
