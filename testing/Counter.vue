@@ -1,5 +1,5 @@
 <template>
-    <div class="tab">
+    <div class="tab" style="height: 3000px">
         <h1>Counter</h1>
         <p>
             Clicked the button:

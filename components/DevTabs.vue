@@ -24,12 +24,14 @@
             >{{ tab.label }}</a>
         </li>
     </ul>
-    <component
-        :is="store.activeTab.component"
-        v-if="store.activeTab"
-        v-bind="store.activeTab.props"
-        class="p-3"
-    />
+    <div class="flex-fill overflow-y-auto">
+        <component
+            :is="store.activeTab.component"
+            v-if="store.activeTab"
+            v-bind="store.activeTab.props"
+            class="p-3"
+        />
+    </div>
 </template>
 
 <script setup>
