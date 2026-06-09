@@ -28,7 +28,7 @@ import { useAppStore } from './store';
  * 
  * @param {PluginMockOptions} options - The options for the polyfill.
  */
-export function createPluginMock({ pinia, router, routes = {}, stores = {}, extras = {}, api: {} } = {}) {
+export function createPluginMock({ pinia, router, routes = {}, stores = {}, extras = {}, api = {} } = {}) {
 
     console.log("Creating plugin mock with options:", { pinia, router, routes, stores, extras, api });
 
