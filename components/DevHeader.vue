@@ -1,7 +1,13 @@
 <template>
     <nav class="navbar navbar-expand-lg border-bottom d-flex">
         <div class="container-fluid">
-            <img src="../spacialist_logo.svg" alt="Spacialist Logo" width="30" height="30" class="playground-logo d-inline-block align-text-top me-2">
+            <img
+                src="../spacialist_logo.svg"
+                alt="Spacialist Logo"
+                width="30"
+                height="30"
+                class="playground-logo d-inline-block align-text-top me-2"
+            >
             <RouterLink
                 class="navbar-brand"
                 to="/"
@@ -33,40 +39,34 @@
     </nav>
 </template>
 
-<script>
+<script setup>
+    import { onMounted } from 'vue';
     import { RouterLink } from 'vue-router';
     import { useAppStore } from '../js/store';
     import DevHeaderItem from './DevHeaderItem.vue';
 
-    export default {
-        components: {
-            DevHeaderItem
+
+    let store = null;
+
+    onMounted(() => {
+        store = useAppStore();
+    });
+
+    const items = [
+        {
+            title: 'Tools',
+            items: store.tools
         },
-        setup() {
-
-            const store = useAppStore();
-
-            const items = [
-                {
-                    title: 'Tools',
-                    items: store.tools
-                },
-                {
-                    title: 'Settings',
-                    items: store.settings
-                },
-                {
-                    title: 'Components',
-                    items: store.components
-                }
-            ];
-
-            return {
-                store,
-                items
-            };
+        {
+            title: 'Settings',
+            items: store.settings
+        },
+        {
+            title: 'Components',
+            items: store.components
         }
-    };
+    ];
+
 </script>
 
 <style
@@ -74,9 +74,9 @@
     scoped
 >
 
-.navbar{
-    padding-top: 3px;
-    padding-bottom: 3px;
-}
+    .navbar {
+        padding-top: 3px;
+        padding-bottom: 3px;
+    }
 
 </style>
