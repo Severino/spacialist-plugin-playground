@@ -14,7 +14,7 @@ export async function usePlayground({
     extras = {},
     pinia = null,
     http = () => { },
-    routes = {},
+    routes = [],
     stores = {},
     i18nLocale = 'en',
     i18nMessages = {
@@ -40,7 +40,7 @@ export async function usePlayground({
 
     app.use(pinia);
     app.use(i18n);
-    createPluginMock({ pinia, router, routes, http, stores, extras, api, });
+    createPluginMock({ pinia, http, stores, extras, api, });
     app.use(useRouter(routes));
 
 

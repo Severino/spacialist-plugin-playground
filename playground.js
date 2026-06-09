@@ -15,9 +15,7 @@ await usePlayground({
     http: (method, url, data) => {
         console.log(`HTTP ${method} request to ${url} with data:`, data);
     },
-    routes: {
-
-    },
+    routes: [],
     stores: {
 
     }
