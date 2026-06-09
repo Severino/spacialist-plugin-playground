@@ -98,7 +98,7 @@ export function createPluginMock({ pinia, router, routes = {}, stores = {}, extr
         register: ({ id, i18n, routes, store }) => {
             window.SpPS.registerI18n(id, i18n);
         },
-        registerPreferences: ({
+        registerPreference: ({
             of,
             key,
             label,
