@@ -12,10 +12,11 @@ import Counter from "./testing/Counter.vue";
 import Todo from "./testing/Todo.vue";
 
 await usePlayground({
+    http: (method, url, data) => {
+        console.log(`HTTP ${method} request to ${url} with data:`, data);
+    },
     routes: {
-        http: (method, url, data) => {
-            console.log(`HTTP ${method} request to ${url} with data:`, data);
-        }
+
     },
     stores: {
 

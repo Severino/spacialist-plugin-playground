@@ -4,8 +4,8 @@ import { useAppStore } from './store';
 /**
  * @typedef {Object} PluginMockOptions
  * @property {import('pinia').Pinia} pinia - The Pinia instance used by the playground app.
- * @property {import('vue-router').Router} router - The Router instance used by the playground app.
- * @property {MockRoutes} routes - The mock routes to use for the http function.
+ * @property {MockRoutes} routes - The mock routes.
+ * @property {function} http - The mock implementation of the http function.
  * @property {MockStores} stores - The mock stores to use for the store.
  */
 
@@ -28,9 +28,9 @@ import { useAppStore } from './store';
  * 
  * @param {PluginMockOptions} options - The options for the polyfill.
  */
-export function createPluginMock({ pinia, router, routes = {}, stores = {}, extras = {}, api = {} } = {}) {
+export function createPluginMock({ pinia, routes = {}, http = () => { }, stores = {}, extras = {}, api = {} } = {}) {
 
-    console.log("Creating plugin mock with options:", { pinia, router, routes, stores, extras, api });
+    console.log("Creating plugin mock with options:", { pinia, routes, http, stores, extras, api });
 
     let componentRouteAdded = false;
     let componentRoute = {
@@ -43,12 +43,7 @@ export function createPluginMock({ pinia, router, routes = {}, stores = {}, extr
     window.SpPS = {
         api: {
             store: stores,
-            http: (method, url, data) => {
-                if (typeof routes.http !== 'function') {
-                    throw new Error('createPluginMock: routes.http is required');
-                }
-                return routes.http(method, url, data);
-            },
+            http: (method, url, data) => http(method, url, data),
             modal: {
                 useModal: ({
                     component = null,

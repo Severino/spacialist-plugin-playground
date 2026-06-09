@@ -13,7 +13,7 @@ export async function usePlayground({
     components = [],
     extras = {},
     pinia = null,
-    router = null,
+    http = () => { },
     routes = {},
     stores = {},
     i18nLocale = 'en',
@@ -36,18 +36,13 @@ export async function usePlayground({
     }
     window.playgroundPinia = pinia;
 
-    if (!router) {
-        router = useRouter();
-    }
-    window.playgroundRouter = router;
-
     components.forEach(({component, name}) => app.component(name, component));
 
     app.use(pinia);
     app.use(i18n);
-    app.use(router);
+    createPluginMock({ pinia, router, routes, http, stores, extras, api, });
+    app.use(useRouter(routes));
 
-    createPluginMock({ pinia, router, routes, stores, extras, api, });
 
     app.mount('#app');
 
