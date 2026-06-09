@@ -25,14 +25,15 @@ export async function usePlayground({
     window.i18n = i18n;
 
 
-    createPluginMock({ routes, stores });
     const app = createApp(App);
-
+    
     app.use(createPinia());
     app.use(i18n);
     app.use(router);
-
+    
+    createPluginMock({ routes, stores });
+    
     app.mount('#app');
-
+    
     return app;
 }
