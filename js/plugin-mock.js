@@ -49,23 +49,25 @@ export function createPluginMock({ pinia, router, routes = {}, stores = {}, extr
                 }
                 return routes.http(method, url, data);
             },
-            useModal: ({
-                component = null,
-                attrs = {},
-            } = {}) => {
-                useAppStore().setModal({
-                    component,
-                    attrs,
-                    onConfirm: attrs.onConfirm,
-                    onCancel: attrs.onCancel,
-                })
+            modal: {
+                useModal: ({
+                    component = null,
+                    attrs = {},
+                } = {}) => {
+                    useAppStore().setModal({
+                        component,
+                        attrs,
+                        onConfirm: attrs.onConfirm,
+                        onCancel: attrs.onCancel,
+                    })
 
-                return {
-                    open: () => useAppStore().isModalOpen = true,
-                    close: () => useAppStore().isModalOpen = false,
-                    destroy: () => { useAppStore().modalComponent = null; useAppStore().isModalOpen = false; },
-                }
+                    return {
+                        open: () => useAppStore().isModalOpen = true,
+                        close: () => useAppStore().isModalOpen = false,
+                        destroy: () => { useAppStore().modalComponent = null; useAppStore().isModalOpen = false; },
+                    }
 
+                },
             },
             router: {
                 push: (route) => {
