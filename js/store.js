@@ -1,6 +1,27 @@
 import { defineStore } from 'pinia';
 
-export const useAppStore = defineStore('appStore', {
+let _pinia = null;
+
+export const setPinia = (pinia) => {
+    if(_pinia != null) {
+        console.error('Pinia instance already set. Overwriting existing instance.');
+    }
+    _pinia = pinia;
+}
+
+export const usePinia = () => {
+    if (!_pinia) {
+        throw new Error('Pinia instance not set. Please call setPinia(pinia) before using the store.');
+    }
+    return _pinia;
+}
+
+export const useAppStore = () => {
+    const pinia = usePinia();
+    return _useAppStore(pinia);
+}
+
+const _useAppStore = defineStore('appStore', {
     state: () => ({
         activeTab: null,
         components: [],
