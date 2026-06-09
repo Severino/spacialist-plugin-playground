@@ -1,28 +1,11 @@
 import { defineStore } from 'pinia';
-
-let _pinia = null;
-
-export const setPinia = (pinia) => {
-    if(_pinia != null) {
-        console.error('Pinia instance already set. Overwriting existing instance.');
-    } else {
-        console.log('Setting Pinia instance in store.js', pinia);
-    }
-    _pinia = pinia;
-}
-
-export const usePinia = () => {
-    if (!_pinia) {
-        throw new Error('Pinia instance not set. Please call setPinia(pinia) before using the store.');
-    }
-    return _pinia;
-}
+import { markRaw } from 'vue';
 
 export const useAppStore = () => {
-    return _useAppStore(usePinia());
+    return _useAppStore(window.playgroundPinia);
 }
 
-const _useAppStore = defineStore('appStore', {
+export const _useAppStore = defineStore('appStore', {
     state: () => ({
         activeTab: null,
         components: [],
@@ -36,6 +19,10 @@ const _useAppStore = defineStore('appStore', {
             this.activeTab = tab;
         },
         addTab(tab) {
+            if(tab.component) {
+                markRaw(tab.component)
+            }
+
             if(this.tabs.length == 0) {
                 this.activeTab = tab;
             }

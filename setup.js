@@ -7,7 +7,6 @@ import { createPluginMock } from './js/plugin-mock.js';
 import { createPinia } from 'pinia';
 import useRouter from './js/router.js';
 import { createI18n } from 'vue-i18n';
-import {setPinia} from './js/store.js';
 
 export async function usePlayground({
     pinia = null,
@@ -27,20 +26,18 @@ export async function usePlayground({
     })
     window.i18n = i18n;
 
-
     const app = createApp(App);
 
     if (!pinia) {
         pinia = createPinia();
     }
+    window.playgroundPinia = pinia;
 
     if (!router) {
         router = useRouter();
     }
-    console.log('Pinia instance created:', pinia);
+    window.playgroundRouter = router;
 
-    console.log('Set pinia instance');
-    setPinia(pinia);
     app.use(pinia);
     app.use(i18n);
     app.use(router);

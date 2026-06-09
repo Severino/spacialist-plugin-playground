@@ -32,29 +32,19 @@
     />
 </template>
 
-<script>
+<script setup>
     import { computed } from 'vue';
     import { useAppStore } from '../js/store';
 
-    export default {
-        setup() {
 
-            const store = useAppStore();
+    const store = useAppStore();
 
-            const pillClass = computed(() => {
-                return (tab) => {
-                    return {
-                        'active': tab.label === store.activeTab.label,
-                    };
-                };
-            });
-
+    const pillClass = computed(() => {
+        return (tab) => {
             return {
-                store,
-                pillClass,
+                'active': tab.label === store.activeTab.label,
             };
-        }
-    };
-</script>
+        };
+    });
 
-<style lang='scss' scoped></style>
+</script>
