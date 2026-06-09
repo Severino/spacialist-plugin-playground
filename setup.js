@@ -9,12 +9,14 @@ import useRouter from './js/router.js';
 import { createI18n } from 'vue-i18n';
 
 export async function usePlayground({
+    pinia = null,
+    router = null,
     routes = {},
     stores = {},
     i18nLocale = 'en',
     i18nMessages = {
-        en: { },
-        de: { }
+        en: {},
+        de: {}
     }
 } = {}) {
 
@@ -27,16 +29,22 @@ export async function usePlayground({
 
     const app = createApp(App);
 
-    const pinia = createPinia();
+    if (!pinia) {
+        pinia = createPinia();
+    }
+
+    if (!router) {
+        router = useRouter();
+    }
     console.log('Pinia instance created:', pinia);
 
     app.use(pinia);
     app.use(i18n);
-    app.use(useRouter());
-    
-    createPluginMock({ routes, stores });
+    app.use(router);
+
+    createPluginMock({ pinia, router, routes, stores });
 
     app.mount('#app');
-    
+
     return app;
 }

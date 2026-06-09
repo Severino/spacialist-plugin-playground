@@ -1,9 +1,10 @@
 import DevComponentPreview from '../components/DevComponentPreview.vue';
-import router from './router';
 import { useAppStore } from './store';
 
 /**
  * @typedef {Object} PluginMockOptions
+ * @property {import('pinia').Pinia} pinia - The Pinia instance used by the playground app.
+ * @property {import('vue-router').Router} router - The Router instance used by the playground app.
  * @property {MockRoutes} routes - The mock routes to use for the http function.
  * @property {MockStores} stores - The mock stores to use for the store.
  */
@@ -27,7 +28,7 @@ import { useAppStore } from './store';
  * 
  * @param {PluginMockOptions} options - The options for the polyfill.
  */
-export function createPluginMock({ routes = {}, stores = {} } = {}) {
+export function createPluginMock({ pinia, router, routes = {}, stores = {} } = {}) {
 
     let componentRouteAdded = false;
     let componentRoute = {
@@ -87,7 +88,7 @@ export function createPluginMock({ routes = {}, stores = {} } = {}) {
             console.log(window.i18n.global.messages.en);
         },
         registerComponent: (componentDefinition) => {
-            const store = useAppStore();
+            const store = useAppStore(pinia);
             store.registerComponent(componentDefinition);
 
             if (!componentRouteAdded) {
@@ -157,7 +158,7 @@ export function createPluginMock({ routes = {}, stores = {} } = {}) {
             href, // Unknown at the moment.
             props, // Currently Unsupported
         }) => {
-            const store = useAppStore();
+            const store = useAppStore(pinia);
 
             if (slot == 'tab') {
                 const tab = {
