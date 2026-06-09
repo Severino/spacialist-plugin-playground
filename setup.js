@@ -9,6 +9,7 @@ import useRouter from './js/router.js';
 import { createI18n } from 'vue-i18n';
 
 export async function usePlayground({
+    components = [],
     pinia = null,
     router = null,
     routes = {},
@@ -37,6 +38,8 @@ export async function usePlayground({
         router = useRouter();
     }
     window.playgroundRouter = router;
+
+    components.forEach(({component, name}) => app.component(name, component));
 
     app.use(pinia);
     app.use(i18n);
