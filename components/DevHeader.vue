@@ -16,7 +16,15 @@
             </RouterLink>
             <div class="collapse navbar-collapse justify-content-end">
                 <div>
-                    <ul class="navbar-nav d-flex gap-3">
+                    <ul class="navbar-nav d-flex gap-3 align-items-center">
+                        <li>
+                            <button
+                                class="btn btn-secondary btn-sm"
+                                @click="testModal"
+                            >
+                                Modal
+                            </button>
+                        </li>
                         <li>
                             <RouterLink
                                 class="nav-link"
@@ -60,6 +68,11 @@
             items: store.components
         }
     ];
+
+    const testModal = () => {
+        
+        store.isModalOpen=true;
+    };
 
 </script>
 

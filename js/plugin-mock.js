@@ -49,12 +49,30 @@ export function createPluginMock({ pinia, router, routes = {}, stores = {}, extr
                 }
                 return routes.http(method, url, data);
             },
+            useModal: ({
+                component = null,
+                attrs = {},
+            } = {}) => {
+                useAppStore().setModal({
+                    component,
+                    attrs,
+                    onConfirm: attrs.onConfirm,
+                    onCancel: attrs.onCancel,
+                })
+
+                return {
+                    open: () => useAppStore().isModalOpen = true,
+                    close: () => useAppStore().isModalOpen = false,
+                    destroy: () => { useAppStore().modalComponent = null; useAppStore().isModalOpen = false; },
+                }
+
+            },
             router: {
                 push: (route) => {
                     console.log(`Navigating to `, route);
                     const entityId = route?.params?.id ?? 0;
-                    
-                    if(!entityId) {
+
+                    if (!entityId) {
                         console.error("No entity ID provided in route params.");
                         return;
                     }
@@ -69,7 +87,8 @@ export function createPluginMock({ pinia, router, routes = {}, stores = {}, extr
                     }
                 }
             },
-            ... api,
+
+            ...api,
         },
         data: {
             t: window.i18n?.global?.t,

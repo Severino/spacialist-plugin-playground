@@ -8,6 +8,9 @@ export const useAppStore = () => {
 export const _useAppStore = defineStore('appStore', {
     state: () => ({
         activeTab: null,
+        modalAttributes: {},
+        modalComponent: null,
+        isModalOpen: false,
         components: [],
         tabs: [],
         settings: [],
@@ -30,6 +33,14 @@ export const _useAppStore = defineStore('appStore', {
         },
         registerComponent(obj) {
             this.components.push(obj);
-        }
+        },
+        setModal({ component, attrs = {}, onConfirm = null, onCancel = null }) {
+            if(component) {
+                markRaw(component);
+            }
+            this.modalComponent = component;
+            this.modalAttributes = attrs;
+            this.isModalOpen = true;
+        },
     },
 });
