@@ -5,6 +5,8 @@ let _pinia = null;
 export const setPinia = (pinia) => {
     if(_pinia != null) {
         console.error('Pinia instance already set. Overwriting existing instance.');
+    } else {
+        console.log('Setting Pinia instance in store.js', pinia);
     }
     _pinia = pinia;
 }
@@ -17,8 +19,7 @@ export const usePinia = () => {
 }
 
 export const useAppStore = () => {
-    const pinia = usePinia();
-    return _useAppStore(pinia);
+    return _useAppStore(usePinia());
 }
 
 const _useAppStore = defineStore('appStore', {
