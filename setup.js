@@ -9,7 +9,9 @@ import useRouter from './js/router.js';
 import { createI18n } from 'vue-i18n';
 
 export async function usePlayground({
+    api = {},
     components = [],
+    extras = {},
     pinia = null,
     router = null,
     routes = {},
@@ -45,7 +47,7 @@ export async function usePlayground({
     app.use(i18n);
     app.use(router);
 
-    createPluginMock({ pinia, router, routes, stores });
+    createPluginMock({ pinia, router, routes, stores, extras, api, });
 
     app.mount('#app');
 
