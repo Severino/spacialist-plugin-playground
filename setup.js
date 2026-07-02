@@ -28,6 +28,7 @@ export async function usePlayground({
         messages: i18nMessages
     })
     window.i18n = i18n;
+    window.t = window.i18n.global.t;
 
     const app = createApp(App);
 
