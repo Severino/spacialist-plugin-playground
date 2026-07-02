@@ -1,5 +1,3 @@
-
-
 export default function useViteServer({
     publicDir = 'public',
     middlewareMode = false,

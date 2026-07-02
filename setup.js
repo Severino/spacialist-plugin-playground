@@ -1,6 +1,7 @@
 import App from './App.vue';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import 'bootstrap/dist/js/bootstrap.bundle.min.js'; // Import Bootstrap JS
+import * as bootstrap from 'bootstrap/dist/js/bootstrap.bundle.min.js'; // Import Bootstrap JS
+window.bootstrap = bootstrap;
 
 import { createApp } from 'vue';
 import { createPluginMock } from './js/plugin-mock.js';
