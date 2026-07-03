@@ -40,6 +40,14 @@ export function createPluginMock({ pinia, router, http = () => { }, stores = {},
         children: []
     };
 
+    const restrictedApiMembers = ['store', 'http', 'modal', 'router'];
+    restrictedApiMembers.forEach(member => {
+        if (api.hasOwnProperty(member)) {
+            console.error(`The api member "${member}" is restricted and cannot be overridden. It was removed and will have no effect on the playground.`);
+            delete api[member];
+        }
+    });
+
     window.SpPS = {
         api: {
             store: stores,
@@ -65,31 +73,6 @@ export function createPluginMock({ pinia, router, http = () => { }, stores = {},
                 },
             },
             router,
-            // router: {
-            //     push: (route) => {
-            //         console.log(`Navigating to `, route);
-            //         const entityId = route?.params?.id ?? 0;
-
-            //         if (!entityId) {
-            //             console.error("No entity ID provided in route params.");
-            //             return;
-            //         }
-
-            //         const entity = stores?.entityStore?.getEntity(entityId);
-            //         stores?.entityStore?.set(entity);
-
-            //     },
-            //     _raw: router,
-            //     currentRoute: {
-            //         value: {
-            //             get params() {
-            //                 const currentRoute = router.currentRoute.value;
-            //                 return currentRoute ? currentRoute.params : {};
-            //             }
-            //         }
-            //     }
-            // },
-
             ...api,
         },
         data: {
