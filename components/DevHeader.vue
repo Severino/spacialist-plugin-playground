@@ -6,13 +6,16 @@
                 alt="Spacialist Logo"
                 width="30"
                 height="30"
-                class="playground-logo d-inline-block align-text-top me-2"
+                class="playground-logo d-inline-block align-text-top me-4"
             >
             <RouterLink
                 class="navbar-brand"
                 to="/"
             >
-                Plugin Development
+
+                <span class="fw-bold">{{ store.pluginId?.toUpperCase() || "UNREGISTERED" }}</span> <span
+                    style="font-size: 1rem; font-weight: 100;"
+                >playground</span>
             </RouterLink>
             <div class="collapse navbar-collapse justify-content-end">
                 <div>
@@ -48,13 +51,23 @@
 </template>
 
 <script setup>
+    import { computed } from 'vue';
     import { useAppStore } from '../js/store';
     import DevHeaderItem from './DevHeaderItem.vue';
 
 
     const store = useAppStore();
-
-    const items = [
+    const items = computed(() => [
+        {
+            title: 'Stores',
+            items: store.stores.map((store) => {
+                const name = store().$id
+                return {
+                    label: name,
+                    to: { name: 'Store', params: { name: name } }
+                }
+            }),
+        },
         {
             title: 'Tools',
             items: store.tools
@@ -67,11 +80,11 @@
             title: 'Components',
             items: store.components
         }
-    ];
+    ]);
 
     const testModal = () => {
-        
-        store.isModalOpen=true;
+
+        store.isModalOpen = true;
     };
 
 </script>

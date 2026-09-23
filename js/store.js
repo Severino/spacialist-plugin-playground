@@ -7,6 +7,9 @@ export const useAppStore = () => {
 
 export const _useAppStore = defineStore('appStore', {
     state: () => ({
+        pluginId: null,
+        pluginRoute: null,
+        router: null,
         activeTab: null,
         modalAttributes: {},
         modalComponent: null,
@@ -16,8 +19,23 @@ export const _useAppStore = defineStore('appStore', {
         settings: [],
         tools: [],
         preferences: [],
+        stores: [],
     }),
     actions: {
+        setRouter(router){
+            this.router = router
+        },
+        registerPlugin(pluginId){
+            if(this.pluginId) {
+                if(this.pluginId === pluginId){
+                    console.warn("Registering same plugin again!", pluginId)
+                } else {
+                    console.error(`Cannot register multiple different plugins - Installed: ${this.pluginId}; Registering ${pluginId}!`)
+                }
+                return;
+            }
+            this.pluginId = pluginId;
+        },
         setActiveTab(tab) {
             this.activeTab = tab;
         },
@@ -33,6 +51,14 @@ export const _useAppStore = defineStore('appStore', {
         },
         registerComponent(obj) {
             this.components.push(obj);
+        },
+        registerStore(store){
+            this.stores.push(store)
+        },
+        getStoreByName(name){
+            return this.stores.find(store => {
+                return store()?.$id === name
+            })
         },
         setModal({ component, attrs = {}, onConfirm = null, onCancel = null }) {
             if(component) {

@@ -7,6 +7,7 @@ import { createPluginMock } from './js/plugin-mock.js';
 import { createPinia } from 'pinia';
 import useRouter from './js/router.js';
 import { createI18n } from 'vue-i18n';
+import { useAppStore } from './js/store.js';
 
 /**
  * Initializes the playground's Vue application with the provided configuration options.
@@ -31,7 +32,7 @@ export function usePlayground({
     pinia = null,
     http = () => { },
     stores = {},
-    routes = null,
+    routes = [],
     router = null,
     i18nLocale = 'en',
     i18nMessages = {
@@ -60,17 +61,14 @@ export function usePlayground({
     app.use(i18n);
 
     if (!router) {
-        if (!routes) {
-            throw new Error("Either router or routes must be provided.");
-        }
         router = useRouter(routes)
     }
 
     createPluginMock({ pinia, router, http, stores, extras, api, });
     app.use(router);
-
-
     app.mount('#app');
+
+    useAppStore().setRouter(router)
 
     return app;
 }

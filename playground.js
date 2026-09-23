@@ -7,6 +7,7 @@
  * 
  */
 
+import { defineStore } from "pinia";
 import { usePlayground } from "./setup.js";
 import Counter from "./testing/Counter.vue";
 import Todo from "./testing/Todo.vue";
@@ -15,7 +16,6 @@ await usePlayground({
     http: (method, url, data) => {
         console.log(`HTTP ${method} request to ${url} with data:`, data);
     },
-    routes: [],
     stores: {
 
     }
@@ -24,6 +24,22 @@ await usePlayground({
 const pluginName = "playground";
 
 console.log(`Registering plugin "${pluginName}" in SpPS...`);
+SpPS.register({
+    id: pluginName,
+    store: defineStore('mock-store', {
+        state: () => ({ points: 16180, user: 'Leonardo' }),
+        getters: {
+            highscoreText: (state) => `HIGHSCORE: ${state.user} ${state.points}`
+        },
+        action: {
+            setHighscore(user, points) {
+                this.user = user
+                this.points = points
+            }
+        }
+    })
+})
+
 SpPS.intoSlot({
     of: pluginName, // unique id string of the plugin.
     slot: "tab", // ["tab","tools","settings"] - unique slot string of the plugin.

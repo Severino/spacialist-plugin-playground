@@ -22,7 +22,7 @@
                 class="dropdown-item"
             >
                 <RouterLink
-                    :to="`/${item.of}/${item.href}`"
+                    :to="getTo(item)"
                     href="#"
                 >
                     {{ item.label }}
@@ -33,18 +33,26 @@
 </template>
 
 <script setup>
-import { computed } from 'vue';
+    import { computed } from 'vue';
+    import { useAppStore } from '../js/store';
 
-const props = defineProps({
-    title: {
-        type: String,
-        required: true
-    },
-    items: {
-        type: Array,
-        required: true
+    const store = useAppStore()
+
+    const props = defineProps({
+        title: {
+            type: String,
+            required: true
+        },
+        items: {
+            type: Array,
+            required: true
+        },
+    });
+
+    function getTo(item) {
+        if (item.to) return item.to
+        else return `/${store.pluginId}/${item.href}`
     }
-});
 
-const hasItems = computed(() => props.items.length > 0);
+    const hasItems = computed(() => props.items.length > 0);
 </script>

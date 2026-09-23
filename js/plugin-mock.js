@@ -78,7 +78,8 @@ export function createPluginMock({ pinia, router, http = () => { }, stores = {},
         data: {
             t: window.i18n?.global?.t,
         },
-        register: ({ id, i18n = null, routes = null, store } = {}) => {
+        register: ({ id, i18n = null, routes = null, store = null } = {}) => {
+            useAppStore().registerPlugin(id);
 
             if (i18n) {
                 window.SpPS.registerI18n(id, i18n);
@@ -86,6 +87,10 @@ export function createPluginMock({ pinia, router, http = () => { }, stores = {},
 
             if (routes) {
                 window.SpPS.registerRoutes(id, routes);
+            }
+
+            if (store) {
+                useAppStore().registerStore(store)
             }
         },
         registerPreference: ({
