@@ -6,7 +6,7 @@ Adds a frontend playground for a spacialist plugin.
 
 Add via npm to your plugin:
 ```bash
-npm i https://github.com/Severino/spacialist-plugin-playground
+npm install -D @severino/spacialist-plugin-playground@0.1.0
 ```
 
 To deploy the relevant files to the plugin root, run the following command.
@@ -39,10 +39,15 @@ To use the playground call the `usePlayground(options)` function in your startup
 You may use the default vite configuration like this:
 
 ```js
+import vue from '@vitejs/plugin-vue';
 import useViteServer from 'spacialist-plugin-playground/useViteServer'
 
 export default defineConfig({
     ...
+    plugins: [
+        vue();
+        ...
+    ]
     server: useViteServer(),
     ...
 })
