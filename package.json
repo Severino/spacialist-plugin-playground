@@ -8,6 +8,18 @@
     ".": "./index.js",
     "./useViteServer": "./js/vite-server.js"
   },
+  "files": [
+    "index.js",
+    "setup.js",
+    "App.vue",
+    "index.html",
+    "spacialist_favicon.svg",
+    "spacialist_logo.svg",
+    "components",
+    "js",
+    "templates",
+    "scripts"
+  ],
   "scripts": {
     "postinstall": "node ./scripts/postinstall.js"
   },
