@@ -57,7 +57,7 @@ export const _useAppStore = defineStore('appStore', {
         },
         getStoreByName(name){
             return this.stores.find(store => {
-                return store()?.$id === name
+                return store?.$id === name
             })
         },
         setModal({ component, attrs = {}, onConfirm = null, onCancel = null }) {

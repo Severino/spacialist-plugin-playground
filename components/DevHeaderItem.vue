@@ -1,7 +1,9 @@
 <template>
     <li class="nav-item dropdown">
         <a
-            :class="['nav-link', { 'dropdown-toggle': hasItems }]"
+            class="d-flex align-items-center"
+            :style="{cursor: hasItems ? 'pointer' : 'not-allowed'}"
+            :class="['nav-link', { 'dropdown-toggle': hasItems, 'opacity-50': !hasItems }]"
             :href="hasItems ? '#' : null"
             :role="hasItems ? 'button' : null"
             :data-bs-toggle="hasItems ? 'dropdown' : null"
@@ -9,8 +11,9 @@
         >
             {{ title }}<span
                 v-if="hasItems"
-                class="text-secondary ms-1"
-            >({{ items.length }})</span>
+                class="badge rounded-pill text-bg-primary ms-1"
+                style="font-size: 0.5rem; align-self: flex-start;"
+            >{{ items.length }}</span>
         </a>
         <ul
             v-if="hasItems"

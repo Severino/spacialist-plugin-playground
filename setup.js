@@ -64,7 +64,7 @@ export function usePlayground({
         router = useRouter(routes)
     }
 
-    createPluginMock({ pinia, router, http, stores, extras, api, });
+    createPluginMock(app, { pinia, router, http, stores, extras, api, });
     app.use(router);
     app.mount('#app');
 

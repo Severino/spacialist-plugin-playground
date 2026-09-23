@@ -24,7 +24,7 @@
         const _store = store.value
         if (_store) {
             try{
-            return JSON.stringify(_store().$state, null, 4)
+            return JSON.stringify(_store.$state, null, 4)
             } catch (e) {
                 return e?.message ? e.message : e;
             }
@@ -35,8 +35,8 @@
         const _store = store.value
         if (_store) {
             const getters = {}
-            _store()._getters.forEach(key => {
-                getters[key] = _store()[key]
+            _store._getters.forEach(key => {
+                getters[key] = _store[key]
             });
 
             return getters

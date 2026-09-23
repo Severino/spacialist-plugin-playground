@@ -2,12 +2,12 @@
     <div class="tab" style="height: 3000px">
         <h1>Counter</h1>
         <p>
-            Clicked the button:
-            {{ counter }}
+            <PulsatingText>{{ playgroundStore.user }}</PulsatingText> has clicked the button
+            <PulsatingText>{{ playgroundStore.points }}</PulsatingText> times
         </p>
         <button
             class="btn btn-primary"
-            @click="() => counter++"
+            @click="() => playgroundStore.points++"
         >
             Click me
         </button>
@@ -15,7 +15,7 @@
 </template>
 
 <script setup>
-    import { ref } from 'vue';
-
-    const counter = ref(0);
+    import {usePlaygroundStore} from "../playground"
+import PulsatingText from "./PulsatingText.vue";
+    const playgroundStore = usePlaygroundStore();
 </script>

@@ -30,10 +30,14 @@
                         </li>
                         <li>
                             <RouterLink
-                                class="nav-link"
+                                class="nav-link d-flex flex-align-center"
                                 to="/"
                             >
-                                Tabs
+                                Tabs<span
+                                    v-if="tabCount > 0"
+                                    class="badge rounded-pill text-bg-primary ms-1"
+                                    style="font-size: 0.5rem; align-self: flex-start;"
+                                >{{ tabCount }}</span>
                             </RouterLink>
                         </li>
                         <DevHeaderItem
@@ -61,7 +65,7 @@
         {
             title: 'Stores',
             items: store.stores.map((store) => {
-                const name = store().$id
+                const name = store.$id
                 return {
                     label: name,
                     to: { name: 'Store', params: { name: name } }
@@ -70,7 +74,12 @@
         },
         {
             title: 'Tools',
-            items: store.tools
+            items: store.tools.map(tool => {
+                return {
+                    label: tool.label,
+                    to: { name: `Tools`, params: { id: tool.id } }
+                }
+            })
         },
         {
             title: 'Settings',
@@ -78,15 +87,23 @@
         },
         {
             title: 'Components',
-            items: store.components
+            items: store.components.map(component => {
+                const label = component.componentTag;
+                return {
+                    label,
+                    to: { name: `Component-${label}` }
+                }
+            })
         }
     ]);
 
     const testModal = () => {
-
         store.isModalOpen = true;
     };
 
+    const tabCount = computed(() => {
+        return store.tabs.length
+    })
 </script>
 
 <style

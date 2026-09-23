@@ -9,7 +9,7 @@
 
                 <div class="list-group mb-3">
                     <label
-                        v-for="(item, index) in items"
+                        v-for="(item, index) in playgroundStore.todos"
                         class="list-group-item align-items-center d-flex gap-2"
                         :class="{'bg-light-subtle': item.done}"
                     >
@@ -18,7 +18,7 @@
                             type="checkbox"
                             v-model="item.done"
                         >
-                        <span :class="{ 'text-decoration-line-through text-muted': item.done }">{{ item.text
+                        <span :class="{ 'text-decoration-line-through text-muted': item.done }">{{ item.message
                         }}</span>
                     </label>
                 </div>
@@ -33,7 +33,7 @@
                     <button
                         class="btn btn-primary"
                         type="button"
-                        @click="addItem"
+                        @click="submit"
                     >
                         Add
                     </button>
@@ -45,19 +45,12 @@
 
 <script setup>
     import { ref } from 'vue';
-    const items = ref([
-        { text: 'Learn Vue.js', done: false },
-        { text: 'Build a todo app', done: false }
-    ]);
+    import {usePlaygroundStore} from "../playground"
+    const playgroundStore = usePlaygroundStore();
     const newItem = ref('');
 
-    function addItem() {
-        const text = newItem.value.trim();
-        if (!text) {
-            return;
-        }
-
-        items.value.push({ text, done: false });
+    function submit(){
+        playgroundStore.addItem(newItem.value)
         newItem.value = '';
     }
 </script>

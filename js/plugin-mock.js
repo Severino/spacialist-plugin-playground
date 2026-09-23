@@ -28,14 +28,14 @@ import { useAppStore } from './store';
  * 
  * @param {PluginMockOptions} options - The options for the polyfill.
  */
-export function createPluginMock({ pinia, router, http = () => { }, stores = {}, extras = {}, api = {} } = {}) {
+export function createPluginMock(app, { pinia, router, http = () => { }, stores = {}, extras = {}, api = {} } = {}) {
 
-    console.log("Creating plugin mock with options:", { pinia, http, stores, extras, api });
+    console.log("Creating plugin mock with options:", { pinia, router, http, stores, extras, api });
 
     let componentRouteAdded = false;
     let componentRoute = {
-        path: `/component`,
-        name: 'component',
+        path: '/component',
+        name: 'Component',
         component: DevComponentPreview,
         children: []
     };
@@ -90,6 +90,7 @@ export function createPluginMock({ pinia, router, http = () => { }, stores = {},
             }
 
             if (store) {
+                // Currently stores are not registered.
                 useAppStore().registerStore(store)
             }
         },
@@ -141,9 +142,12 @@ export function createPluginMock({ pinia, router, http = () => { }, stores = {},
                 componentRouteAdded = true;
             }
 
-            const path = componentDefinition.componentTag ?? componentDefinition.key;
-            router.addRoute('component', {
-                path: `${path}`,
+            const name = componentDefinition.componentTag ?? componentDefinition.key;
+            const SpName = `SpPlugin${name}`
+            app.component(SpName, componentDefinition.component)
+            router.addRoute('Component', {
+                name: `Component-${name}`,
+                path: `/${name}`,
                 component: componentDefinition.component
             });
         },
