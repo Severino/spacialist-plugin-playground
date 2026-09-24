@@ -2,14 +2,15 @@
     <div
         class="dev-modal"
         v-if="store.isModalOpen"
+        @click=""
     >
 
         <div class="dev-modal-content position-relative d-flex flex-column">
             <button
                 class="btn-close position-absolute top-0 end-0 m-3"
-                @click="store.isModalOpen = false"
+                @click="close"
             ></button>
-            <div class="flex-fill">
+            <div class="flex-fill overflow-y-auto">
                 <component
                     v-if="store.modalComponent"
                     :is="store.modalComponent"
@@ -22,12 +23,13 @@
                     Component not set
                 </p>
             </div>
-            <footer class="d-flex justify-content-end gap-2 mt-3"
+            <footer
+                class="d-flex justify-content-end gap-2 mt-3"
                 v-if="store.modalAttributes.onConfirm || store.modalAttributes.onCancel"
             >
                 <button
                     class="btn btn-secondary"
-                    @click="store.isModalOpen = false"
+                    @click="close"
                 >
                     Close
                 </button>
@@ -48,12 +50,17 @@
     import { useAppStore } from '../js/store';
 
     const store = useAppStore();
+    const close = () => store.isModalOpen = false
 </script>
 
 <style
     lang='scss'
     scoped
 >
+
+    .btn-close {
+        z-index: 10000;
+    }
 
     .dev-modal {
         position: fixed;
@@ -71,11 +78,10 @@
 
     .dev-modal-content {
         background-color: #fff;
-        padding: 20px;
         border-radius: 5px;
         max-width: 1080px;
         width: 100%;
-        min-height: 200px;
+        min-height: 400px;
     }
 
 
