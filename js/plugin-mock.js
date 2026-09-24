@@ -77,6 +77,7 @@ export function createPluginMock(app, { pinia, router, http = () => { }, stores 
         },
         data: {
             t: window.i18n?.global?.t,
+            pinia,
         },
         register: ({ id, i18n = null, routes = null, store = null } = {}) => {
             useAppStore().registerPlugin(id);
