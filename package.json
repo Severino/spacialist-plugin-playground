@@ -1,6 +1,6 @@
 {
   "name": "@severino/spacialist-plugin-playground",
-  "version": "0.1.7",
+  "version": "0.1.8",
   "description": "",
   "main": "./index.js",
   "module": "./index.js",

@@ -10,11 +10,12 @@
                 class="btn-close position-absolute top-0 end-0 m-3"
                 @click="close"
             ></button>
-            <div class="flex-fill overflow-y-auto">
+            <div class="d-flex flex-column flex-fill overflow-y-auto">
                 <component
                     v-if="store.modalComponent"
                     :is="store.modalComponent"
                     v-bind="store.modalAttributes"
+                    class="flex-fill"
                 />
                 <p
                     v-else
