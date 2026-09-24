@@ -1,3 +1,3 @@
-import { usePlayground } from 'spacialist-plugin-playground';
+import { usePlayground } from '@severino/spacialist-plugin-playground';
 
 usePlayground();

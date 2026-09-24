@@ -125,13 +125,8 @@ export function createPluginMock(app, { pinia, router, http = () => { }, stores 
             for (const lang of languages) {
                 // Build per-locale messages under the `plugin` namespace
                 const localeMessages = { plugin: i18n[lang] };
-
-
                 window.i18n.global.messages[lang] = localeMessages;
-
             }
-
-            console.log(window.i18n.global.messages.en);
         },
         registerComponent: (componentDefinition) => {
             const store = useAppStore(pinia);

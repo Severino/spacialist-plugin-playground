@@ -1,6 +1,6 @@
 {
   "name": "@severino/spacialist-plugin-playground",
-  "version": "0.1.4",
+  "version": "0.1.5",
   "description": "",
   "main": "./index.js",
   "module": "./index.js",
@@ -21,7 +21,6 @@
     "scripts"
   ],
   "scripts": {
-    "postinstall": "node ./scripts/postinstall.js",
     "bump": "node ./scripts-dev/bump.js",
     "bump:c": "node ./scripts-dev/bump.js --commit",
     "bump:cp": "node ./scripts-dev/bump.js --commit-and-push"
@@ -42,7 +41,7 @@
   },
   "homepage": "https://github.com/Severino/spacialist-plugin-playground#readme",
   "peerDependencies": {
-    "pinia": "^3.0.0",
+    "pinia": "3",
     "vue": "^3.5.0",
     "vue-i18n": "^11.0.0",
     "vue-router": "^4.0.0 || ~5.0.0"
