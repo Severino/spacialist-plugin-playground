@@ -2,7 +2,6 @@
     <div
         class="dev-modal"
         v-if="store.isModalOpen"
-        @click="close"
     >
 
         <div class="dev-modal-content position-relative d-flex flex-column">
