@@ -2,7 +2,7 @@
     <div
         class="dev-modal"
         v-if="store.isModalOpen"
-        @click=""
+        @click="close"
     >
 
         <div class="dev-modal-content position-relative d-flex flex-column">
@@ -83,6 +83,7 @@
         max-width: 1080px;
         width: 100%;
         min-height: 400px;
+        max-height: 95%;
     }
 
 
